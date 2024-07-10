@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Netch.AdvancedTopics {
+﻿namespace Netch.AdvancedTopics {
 	public class Reflection {
 		// Reflection lets us programmatically inspect assemblies
 		// - Can be used to operate on otherwise inaccessible types
@@ -115,6 +113,39 @@ namespace Netch.AdvancedTopics {
 			foreach (char item in array) {
 				Console.Write(item + " ");
 			}
+		}
+
+		public void ReflectionInvocationExample() {
+			// Calling a simple method:
+			string str = "netchDev    ";
+			Type stringType = typeof(string);
+
+			System.Reflection.MethodInfo? trimMethod = stringType.GetMethod("Trim", Array.Empty<Type>()); // Trim doesn't take any params so pass in an empty array
+			object result = trimMethod.Invoke(str, Array.Empty<object>());
+			Console.WriteLine($"\"{result}\""); // Returns "netchDev"
+
+			Console.WriteLine("====================================");
+			// Calling a method with out parameters:
+			// bool int.TryParse(str, out int n) for example
+
+			string numberString = "123";
+			System.Reflection.MethodInfo? parseMethod = typeof(int).GetMethod("TryParse",
+				new[] { typeof(string), typeof(int).MakeByRefType() }); // Since TryParse has an out parameter, we need to call MakeByRefType
+			Console.WriteLine(parseMethod); // Returns Boolean TryParse(System.String, Int32 ByRef)
+
+			// When we invoke TryParse we need to pass an array of arguments
+			object[] args = new object[] { numberString, null }; // The second argument is the out parameter, which is null for now
+			bool success = (bool)parseMethod.Invoke(null, args); // The first argument is null because TryParse is a static method, instead of calling it from a specific instance
+			Console.WriteLine(success); // Returns true
+			Console.WriteLine(args[1] + " - " + args[1].GetType()); // Returns 123 as an int
+
+			Console.WriteLine("====================================");
+			// Generic invocation
+			Type at = typeof(Activator);
+			System.Reflection.MethodInfo? method = at.GetMethod("CreateInstance", Array.Empty<Type>());
+			System.Reflection.MethodInfo createInstanceGeneric = method.MakeGenericMethod(typeof(Guid));
+			Guid guid = (Guid)createInstanceGeneric.Invoke(null, null);
+			Console.WriteLine(guid);
 		}
 	}
 }
