@@ -71,5 +71,45 @@ namespace Netch.AdvancedTopics {
 
 			w.WhatIsThis();
 		}*/
+
+		////////////////////////////////////////
+		// ExpandoObject
+		////////////////////////////////////////
+		// An object that grows as you give it members
+		// It dynamically creates that property and initializes it
+		// - It adds elements to a Dictionary behind the scenes, which maps the names to objects
+		public void ExpandoObjectExample() {
+			dynamic person = new ExpandoObject();
+			person.Name = "John";
+			person.Age = 30;
+
+			Console.WriteLine($"{person.Name} is {person.Age} years old");
+
+			// You can also nest ExpandoObjects
+			person.Address = new ExpandoObject();
+			person.Address.City = "London";
+			person.Address.Country = "UK";
+
+			// You can also add methods to ExpandoObjects
+			person.SayHello = new Action(() => Console.WriteLine("Hello!"));
+			person.SayHello();
+
+			// You can also have a events, but it's a bit different
+			person.FallsIll = null;
+
+			// After subscribing is when it becomes an event behind the scenes
+			person.FallsIll += new EventHandler<dynamic>((sender, eventArgs) => Console.WriteLine($"A doctor has been called for {eventArgs}"));
+			EventHandler<dynamic> e = person.FallsIll;
+			e?.Invoke(person, person.Name);
+
+			// We can also gain access to the dictionary behind the ExpandoObject
+			IDictionary<string, object> dict = (IDictionary<string, object>)person;
+			Console.WriteLine(dict.ContainsKey("Name")); // returns true
+			Console.WriteLine(dict.ContainsKey("LastName")); // returns false
+
+			// We can also manipulate the dictionary
+			dict["LastName"] = "Smith";
+			Console.WriteLine(person.LastName); // returns Smith
+		}
 	}
 }
