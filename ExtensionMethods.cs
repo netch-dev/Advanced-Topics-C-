@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.Serialization;
+using System.Text;
 using static Netch.AdvancedTopics.ExtensionMethods;
 
 namespace Netch.AdvancedTopics {
@@ -18,7 +19,7 @@ namespace Netch.AdvancedTopics {
 			public int Age;
 		}
 
-		public void Main() {
+		public void TestExtensionMethods() {
 			// Adding an extension method to the Foo class
 			Console.WriteLine(new Foo().Measure());
 
@@ -76,6 +77,32 @@ namespace Netch.AdvancedTopics {
 
 		public static void ExtendAnyObject(this object o) {
 			Console.WriteLine($"I can extend any object - {o.GetType()}");
+		}
+	}
+
+	public static class ConvenientExtensionExample {
+		// name shortening wrappers
+		public static StringBuilder al(this StringBuilder sb, string s) {
+			return sb.AppendLine(s);
+		}
+
+		// combine two or more calls
+		// AppendLine()
+		// AppendFormat()
+		public static StringBuilder AppendFormatLine(this StringBuilder sb, string format, params object[] args) {
+			return sb.AppendFormat(format, args).AppendLine();
+		}
+
+		public static ulong Xor(this IList<ulong> values) {
+			ulong first = values[0];
+			foreach (ulong item in values.Skip(1)) {
+				first ^= item;
+			}
+			return first;
+		}
+
+		public static string f(this string format, params object[] args) {
+			return string.Format(format, args);
 		}
 	}
 }
