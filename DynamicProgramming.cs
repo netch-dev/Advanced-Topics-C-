@@ -2,6 +2,11 @@
 using System.Dynamic;
 
 namespace Netch.AdvancedTopics {
+	// Summary: 
+	// - Dynamic keyword isnt just for interop with dynamically typed languages
+	// - Allows us to call members on types, even if those members arent materialized at compile time
+	// - Provide a useful interception mechanism
+
 	public class DynamicProgramming {
 		public void DynamicObjectExample() {
 			// Dynamic is a class that starts out empty and you can add properties to it at runtime
@@ -107,7 +112,7 @@ namespace Netch.AdvancedTopics {
 			Console.WriteLine(dict.ContainsKey("Name")); // returns true
 			Console.WriteLine(dict.ContainsKey("LastName")); // returns false
 
-			// We can also manipulate the dictionary
+			// We can manipulate the dictionary directly
 			dict["LastName"] = "Smith";
 			Console.WriteLine(person.LastName); // returns Smith
 		}
