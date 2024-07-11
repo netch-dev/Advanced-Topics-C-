@@ -1,4 +1,14 @@
 ﻿namespace Netch.AdvancedTopics {
+	// Summary: 
+	// - Type info is encapsulated in a System.Type
+	// - Using reflection, we can:
+	// -- Inspect types, methods, fields, properties, etc.
+	// -- Construct new instances of types
+	// -- Invoke type methods
+	// -- Use a types delegates and events
+
+	// - Reflection enables other language features
+	// -- Serialization, attributes, etc
 	public class Reflection {
 		// Reflection lets us programmatically inspect assemblies
 		// - Can be used to operate on otherwise inaccessible types
@@ -16,8 +26,6 @@
 
 			// For built-in types:
 			Type? t3 = Type.GetType("System.Int64");
-			string? t3FullName = t3.FullName; // Returns System.Int64
-			t3.GetMethods(); // Returns an array of MethodInfo objects
 
 			// For generics:
 			Type? t4 = Type.GetType("System.Collections.Generic.List`1"); // `1 is the generic type parameter count, only one parameter for a List. Dictionary with a key and value type would be `2
@@ -27,7 +35,6 @@
 
 		public void InspectionExample() {
 			Type t = typeof(Guid);
-			string tFullName = t.FullName; // Returns System.Guid
 
 			System.Reflection.ConstructorInfo[] ctors = t.GetConstructors(); // Returns an array of ConstructorInfo objects
 			foreach (System.Reflection.ConstructorInfo c in ctors) {
@@ -49,9 +56,6 @@
 			foreach (System.Reflection.MethodInfo method in methods) {
 				Console.WriteLine(method.Name);
 			}
-
-			Console.WriteLine("=====================================");
-			Console.WriteLine("Events: " + t.GetEvents().Length);
 		}
 
 		// Instantiate a type, given you have its type information
@@ -81,8 +85,8 @@
 			Console.WriteLine("Array List: " + arrayList);
 
 			Console.WriteLine("====================================");
-			Type st = typeof(string);
-			System.Reflection.ConstructorInfo? stringCtor = st.GetConstructor(new[] { typeof(char[]) });
+			Type stringType = typeof(string);
+			System.Reflection.ConstructorInfo? stringCtor = stringType.GetConstructor(new[] { typeof(char[]) });
 			object str = stringCtor.Invoke(new object[] { new[] { 'n', 'e', 't', 'c', 'h' } });
 			Console.WriteLine("String: " + str);
 
@@ -128,12 +132,12 @@
 			// Calling a method with out parameters:
 			// bool int.TryParse(str, out int n) for example
 
-			string numberString = "123";
-			System.Reflection.MethodInfo? parseMethod = typeof(int).GetMethod("TryParse",
-				new[] { typeof(string), typeof(int).MakeByRefType() }); // Since TryParse has an out parameter, we need to call MakeByRefType
+			// Since TryParse has an out parameter, we need to call MakeByRefType
+			System.Reflection.MethodInfo? parseMethod = typeof(int).GetMethod("TryParse", new[] { typeof(string), typeof(int).MakeByRefType() });
 			Console.WriteLine(parseMethod); // Returns Boolean TryParse(System.String, Int32 ByRef)
 
-			// When we invoke TryParse we need to pass an array of arguments
+			string numberString = "123";
+			// TryParse needs an array of arguments
 			object[] args = new object[] { numberString, null }; // The second argument is the out parameter, which is null for now
 			bool success = (bool)parseMethod.Invoke(null, args); // The first argument is null because TryParse is a static method, instead of calling it from a specific instance
 			Console.WriteLine(success); // Returns true
@@ -144,8 +148,73 @@
 			Type at = typeof(Activator);
 			System.Reflection.MethodInfo? method = at.GetMethod("CreateInstance", Array.Empty<Type>());
 			System.Reflection.MethodInfo createInstanceGeneric = method.MakeGenericMethod(typeof(Guid));
-			Guid guid = (Guid)createInstanceGeneric.Invoke(null, null);
+			Guid guid = (Guid)createInstanceGeneric.Invoke(null, Array.Empty<object>());
 			Console.WriteLine(guid);
 		}
+		////////////////////////////////////////
+		// Delegates and Events:
+		////////////////////////////////////////
+		public class EventDemo {
+			public event EventHandler<int> MyEvent;
+
+			public void Handler(object sender, int arg) {
+				Console.WriteLine($"Just got {arg}");
+			}
+
+			public void InvokeEvent() {
+				MyEvent?.Invoke(null, 311);
+			}
+		}
+
+		/*		
+	 	public static void Main(string[] args) {
+			Reflection.EventDemo eventDemo = new Reflection.EventDemo();
+
+			System.Reflection.EventInfo? eventInfo = typeof(Reflection.EventDemo).GetEvent("MyEvent");
+			System.Reflection.MethodInfo? handlerMethod = eventDemo.GetType().GetMethod("Handler");
+
+			// Create a delegate from the handler method
+			Delegate handler = Delegate.CreateDelegate(eventInfo?.EventHandlerType, null, handlerMethod);
+			// Add this delegate as the event handler
+			eventInfo.AddEventHandler(eventDemo, handler);
+
+			eventDemo.InvokeEvent();
+		}*/
+
+		////////////////////////////////////////
+		// Attributes:
+		////////////////////////////////////////
+		// Attributes are a way to add metadata to types, methods, properties, etc.
+		// You can add multiple attributes to a single element
+		// Attributes only add metadata, they don't add any behaviour
+		// Reflection is the only tool you can use to get more info about attributes
+
+		// The class name ends with Attribute by convention
+		// When you call it you don't need to include the Attribute part, just Repeat in this case
+		public class RepeatAttribute : Attribute {
+			public int Times { get; }
+			public RepeatAttribute(int times) {
+				Times = times;
+			}
+		}
+
+		public class AttributeDemo {
+			[Repeat(3)]
+			public void SomeMethod() {
+
+			}
+		}
+
+		/*		
+	 	public static void Main(string[] args) {
+			System.Reflection.MethodInfo? someMethod = typeof(Reflection.AttributeDemo).GetMethod("SomeMethod");
+			// Go through all of the attributes attached to this method
+			foreach (object attribute in someMethod.GetCustomAttributes(true)) {
+				Console.WriteLine($"Found an attribute: {attribute.GetType()}");
+				if (attribute is Reflection.RepeatAttribute repeatAttribute) {
+					Console.WriteLine($"This attribute repeats {repeatAttribute.Times} times");
+				}
+			}
+		}*/
 	}
 }
