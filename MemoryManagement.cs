@@ -18,13 +18,22 @@ namespace Netch.AdvancedTopics {
 				Y = y;
 			}
 
+			#region 'ref readonly' variables
+			//public static Point Origin = new Point();
+			// When you access Origin shown above, because it's a value type, you're copying the entire value and allocating new memory each time
+
+			// To prevent copying the entire value:
+			// Use a ref readonly qualifier, you can pass a reference to the value, instead of the value itself
+			private static Point origin = new Point();
+			public static ref readonly Point Origin => ref origin;
+			#endregion
+
 			public override string ToString() {
 				return $"({X},{Y})";
 			}
 		}
 
-		// The in keyword:
-
+		#region The 'in' keyword
 		// double MeasureDistance(Point p1, Point p2) { ...
 		// If you want to call MeasureDistance without 'in', you have to pass the points by value (entire copy)
 
@@ -53,6 +62,15 @@ namespace Netch.AdvancedTopics {
 
 			double distance = MeasureDistance(p1, p2);
 			Console.WriteLine($"Distance: {distance}");
+
+			double distanceFromOrigin = MeasureDistance(p1, Point.Origin);
+
+			// Because we don't have any ref qualifiers, the compiler will make a copy of the value
+			Point copyOfOrigin = Point.Origin; // by-value copy
 		}
+
+		#endregion
+
+
 	}
 }
