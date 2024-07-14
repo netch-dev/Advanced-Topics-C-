@@ -78,5 +78,42 @@ namespace Netch.AdvancedTopics {
 			}
 		}
 		#endregion
+
+		#region Duck typing
+		private ref struct Foo {
+			public void Dispose() {
+				Console.WriteLine("Disposing foo");
+			}
+		}
+
+		// duck typing: you can call a method from a class, even if that method is not part of that interface
+		// GetEnumerator() - foreach (IEnumerable<T>)
+
+		// Dispose() - using (IDisposable)
+		public void TestDuckTyping() {
+			// This will invoke the Dispose method, even though we didn't implement IDisposable
+			using Foo foo = new Foo();
+		}
+
+		#endregion
+
+		#region Mixin
+		// mixin: Add additionaly functionality to a class
+		private interface IMyDisposable<T> : IDisposable {
+			void IDisposable.Dispose() {
+				Console.WriteLine($"Disposing {typeof(T).Name}");
+			}
+		}
+
+		// We've taken the functionality of IMyDisposable (Dispose method) and added it to MyClass
+		public class MyClass : IMyDisposable<MyClass> {
+
+		}
+
+		public void TestMixin() {
+			// Because of duck typing, the c# compiler will find the Dispose method in IMyDisposable and call it
+			using MyClass myClass = new MyClass();
+		}
+		#endregion
 	}
 }
