@@ -151,9 +151,8 @@
 			Guid guid = (Guid)createInstanceGeneric.Invoke(null, Array.Empty<object>());
 			Console.WriteLine(guid);
 		}
-		////////////////////////////////////////
-		// Delegates and Events:
-		////////////////////////////////////////
+
+		#region Delegates and Events
 		public class EventDemo {
 			public event EventHandler<int> MyEvent;
 
@@ -166,8 +165,7 @@
 			}
 		}
 
-		/*		
-	 	public static void Main(string[] args) {
+		public void EventExample() {
 			Reflection.EventDemo eventDemo = new Reflection.EventDemo();
 
 			System.Reflection.EventInfo? eventInfo = typeof(Reflection.EventDemo).GetEvent("MyEvent");
@@ -179,11 +177,10 @@
 			eventInfo.AddEventHandler(eventDemo, handler);
 
 			eventDemo.InvokeEvent();
-		}*/
+		}
+		#endregion
 
-		////////////////////////////////////////
-		// Attributes:
-		////////////////////////////////////////
+		#region Attributes
 		// Attributes are a way to add metadata to types, methods, properties, etc.
 		// You can add multiple attributes to a single element
 		// Attributes only add metadata, they don't add any behaviour
@@ -205,8 +202,7 @@
 			}
 		}
 
-		/*		
-	 	public static void Main(string[] args) {
+		public void AttributeExample() {
 			System.Reflection.MethodInfo? someMethod = typeof(Reflection.AttributeDemo).GetMethod("SomeMethod");
 			// Go through all of the attributes attached to this method
 			foreach (object attribute in someMethod.GetCustomAttributes(true)) {
@@ -215,6 +211,7 @@
 					Console.WriteLine($"This attribute repeats {repeatAttribute.Times} times");
 				}
 			}
-		}*/
+		}
+		#endregion
 	}
 }

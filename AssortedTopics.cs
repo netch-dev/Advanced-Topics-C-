@@ -1,9 +1,5 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
-using System;
-using System.Diagnostics;
-using System.Net.Http.Headers;
+﻿using System.Diagnostics;
 using System.Numerics;
-using System.Threading;
 
 namespace Netch.AdvancedTopics {
 	public class AssortedTopics {
@@ -100,7 +96,7 @@ namespace Netch.AdvancedTopics {
 		#endregion
 
 		#region Mixin
-		// mixin: Add additionaly functionality to a class
+		// mixin: Add additional functionality to a class
 		private interface IMyDisposable<T> : IDisposable {
 			void IDisposable.Dispose() {
 				Console.WriteLine($"Disposing {typeof(T).Name}");

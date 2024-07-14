@@ -8,6 +8,8 @@ namespace Netch.AdvancedTopics {
 	// - Provide a useful interception mechanism
 
 	public class DynamicProgramming {
+
+		#region Dynamic object
 		public void DynamicObjectExample() {
 			// Dynamic is a class that starts out empty and you can add properties to it at runtime
 			// We have this for compatibility with other languages
@@ -34,7 +36,7 @@ namespace Netch.AdvancedTopics {
 		// The .net framework has a BaseClass that allows us to create dynamic objects
 		public class Widget : DynamicObject {
 			public void WhatIsThis() {
-				// We cannot use the this keyword because this is a dynamic object
+				// We cannot use the 'this' keyword because this is a dynamic object
 				//Console.WriteLine(this.World);
 
 				// We can use the This property below
@@ -46,8 +48,6 @@ namespace Netch.AdvancedTopics {
 			private dynamic This => this;
 
 			public override bool TryGetMember(GetMemberBinder binder, out object? result) {
-				//return base.TryGetMember(binder, out result);
-
 				result = binder.Name;
 				return true;
 			}
@@ -64,7 +64,7 @@ namespace Netch.AdvancedTopics {
 			}
 		}
 
-		/*public static void Main(string[] args) {
+		public void WidgetTestExample() {
 			dynamic w = new Widget();
 			//var w2 = new .Widget() as dynamic;
 
@@ -75,11 +75,10 @@ namespace Netch.AdvancedTopics {
 			Console.WriteLine(w[7]);
 
 			w.WhatIsThis();
-		}*/
+		}
+		#endregion
 
-		////////////////////////////////////////
-		// ExpandoObject
-		////////////////////////////////////////
+		#region Expando object
 		// An object that grows as you give it members
 		// It dynamically creates that property and initializes it
 		// - It adds elements to a Dictionary behind the scenes, which maps the names to objects
@@ -116,5 +115,6 @@ namespace Netch.AdvancedTopics {
 			dict["LastName"] = "Smith";
 			Console.WriteLine(person.LastName); // returns Smith
 		}
+		#endregion
 	}
 }
