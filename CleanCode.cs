@@ -48,6 +48,15 @@
 		// Try to limit the number of parameters to 3 or 4
 		#endregion
 
+		#region Output Parameters
+		// int count = 0;
+		// bool more = false;
+		// var customers = GetCustomers(pageIndex, out count, out more);
+
+		// It doesn't really make sense to pass data in and return from the arguments.
+		// Unless you're working with a method that returns a flag and outs a value
+		#endregion
+
 		#endregion
 	}
 }
