@@ -55,6 +55,8 @@
 
 		// It doesn't really make sense to pass data in and return from the arguments.
 		// Unless you're working with a method that returns a flag and outs a value
+
+		// Return an object from a method instead of using output parameters
 		#endregion
 
 		#endregion
