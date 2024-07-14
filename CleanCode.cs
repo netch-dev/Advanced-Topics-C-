@@ -39,6 +39,15 @@
 		// void Parse(int command); vs int Parse(string command);
 		#endregion
 
+		#region Long Parameter List 
+		// - The more parameters we have in a method, the harder it is to understand and use
+		// CheckNotifications(null, 1, true, false, DateTime.Now);
+
+		// If you have parameters that are used often together, encapsulate them in a class to reduce the number of parameters
+
+		// Try to limit the number of parameters to 3 or 4
+		#endregion
+
 		#endregion
 	}
 }
