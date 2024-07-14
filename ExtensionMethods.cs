@@ -9,6 +9,10 @@ namespace Netch.AdvancedTopics {
 	// - Can extend a great many types (System.Object, generics). For example giving an integer an additional method
 	// - Form the backbone of fluent interfaces and DSLs (Domain Specific Languages)
 
+	// - Extension methods are defined as static methods inside static classes
+	// - There is no polymorphism; you cannot override built in methods such as ToString()
+	// - EM can be defined on primitive and reference tpyes, your own or build in, on object or type T, on value tuples, delegates
+
 	public class ExtensionMethods {
 		public class Foo {
 			public string Name => "Foo";
@@ -93,6 +97,7 @@ namespace Netch.AdvancedTopics {
 			return sb.AppendFormat(format, args).AppendLine();
 		}
 
+		// xor a list of values
 		public static ulong Xor(this IList<ulong> values) {
 			ulong first = values[0];
 			foreach (ulong item in values.Skip(1)) {
@@ -101,6 +106,7 @@ namespace Netch.AdvancedTopics {
 			return first;
 		}
 
+		// shortening a method name. not really a fan of this one because it reduces readability but it's an example of what can be done
 		public static string f(this string format, params object[] args) {
 			return string.Format(format, args);
 		}
