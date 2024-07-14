@@ -59,6 +59,12 @@
 		// Return an object from a method instead of using output parameters
 		#endregion
 
+		#region Variable Declarations on the Top
+		// With all of variables declared at the top instead of where theyre used, the reader will have to scroll up and down to understand the code
+
+		// Declare variables close to their usage
+		#endregion
+
 		#endregion
 	}
 }
