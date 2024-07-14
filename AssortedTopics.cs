@@ -1,6 +1,8 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Diagnostics;
+using System.Net.Http.Headers;
+using System.Numerics;
 using System.Threading;
 
 namespace Netch.AdvancedTopics {
@@ -113,6 +115,47 @@ namespace Netch.AdvancedTopics {
 		public void TestMixin() {
 			// Because of duck typing, the c# compiler will find the Dispose method in IMyDisposable and call it
 			using MyClass myClass = new MyClass();
+		}
+		#endregion
+
+		#region Continuation passing style
+		// Style of programming where you pass a function to another function, which will call it when it's done
+		// - Useful for separating a complicated algorithms into smaller parts
+
+		public class QuadraticEquationSolver {
+			// Since we're using an entire class instead of a single function, we may use more than one function to solve the equation
+
+			// ax^2 + bx + c == 0
+			public Tuple<Complex, Complex> StartCalculation(double a, double b, double c) {
+				double discriminant = (b * b) - (4 * a * c);
+				if (discriminant < 0) {
+					return SolveComplex(a, b, discriminant);
+				} else {
+					return SolveSimple(a, b, discriminant);
+				}
+			}
+
+			private Tuple<Complex, Complex> SolveSimple(double a, double b, double discriminant) {
+				double rootDisc = Math.Sqrt(discriminant);
+				return Tuple.Create(
+					new Complex(-b + (rootDisc / (2 * a)), 0),
+					new Complex(-b - (rootDisc / (2 * a)), 0)
+				);
+			}
+
+			private Tuple<Complex, Complex> SolveComplex(double a, double b, double discriminant) {
+				Complex rootDisc = Complex.Sqrt(new Complex(discriminant, 0));
+				return Tuple.Create(
+					-b + (rootDisc / (2 * a)),
+					-b - (rootDisc / (2 * a))
+				);
+			}
+		}
+
+		public void ContinuationPassingStyleExample() {
+			QuadraticEquationSolver solver = new QuadraticEquationSolver();
+			Tuple<Complex, Complex> result = solver.StartCalculation(1, 2, 3);
+			Console.WriteLine($"Roots: {result.Item1}, {result.Item2}");
 		}
 		#endregion
 	}
