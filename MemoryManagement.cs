@@ -10,6 +10,11 @@ namespace Netch.AdvancedTopics {
 	// - Ref struct
 	// - Span<T>
 
+	// Summary:
+	// Values types can be passed by value or by reference
+	// 'in' keyword: pass by reference, but read-only
+	// 'ref readonly' lets you expose a member as a readyonly reference
+
 	public class MemoryManagement {
 		private struct Point {
 			public double X, Y;
@@ -41,7 +46,6 @@ namespace Netch.AdvancedTopics {
 		// Using the in keyword, you can pass the points by reference, instead of by value (entire copy), which is more efficient
 
 		// The in keyword is a read-only reference to the value, so you can't modify the value
-		// You also can't use that reference to mutate the value
 
 		private double MeasureDistance(in Point p1, in Point p2) {
 			double dx = p1.X - p2.X;
@@ -68,7 +72,6 @@ namespace Netch.AdvancedTopics {
 			// Because we don't have any ref qualifiers, the compiler will make a copy of the value
 			Point copyOfOrigin = Point.Origin; // by-value copy
 		}
-
 		#endregion
 
 
