@@ -32,6 +32,13 @@
 		}
 		#endregion
 
+		#region Poor Method Signatures
+		// Orange GetCustomer(int airplane);
+		// The method above is not clear about what it does
+
+		// void Parse(int command); vs int Parse(string command);
+		#endregion
+
 		#endregion
 	}
 }
