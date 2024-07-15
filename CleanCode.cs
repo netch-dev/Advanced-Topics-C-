@@ -40,7 +40,7 @@
 		#endregion
 
 		#region Long Parameter List 
-		// - The more parameters we have in a method, the harder it is to understand and use
+		// - The more parameters we have in a method, the more difficult it is to understand and use
 		// CheckNotifications(null, 1, true, false, DateTime.Now);
 
 		// If you have parameters that are used often together, encapsulate them in a class to reduce the number of parameters
@@ -60,9 +60,13 @@
 		#endregion
 
 		#region Variable Declarations on the Top
-		// With all of variables declared at the top instead of where theyre used, the reader will have to scroll up and down to understand the code
+		// In methods with variables declared at the top instead of where theyre used, the reader will have to scroll up and down to understand the code
 
 		// Declare variables close to their usage
+		#endregion
+
+		#region Magic Numbers
+		// Avoid magic numbers at all times
 		#endregion
 
 		#endregion
