@@ -69,6 +69,28 @@
 		// Avoid magic numbers at all times
 		#endregion
 
+		#region Nested Conditionals
+		// Nested conditionals make programs hard to read and test
+
+		// Using the Ternary operator
+		public void TernaryOperatorExample() {
+			if (1 == 1) {
+				Console.WriteLine("Yes");
+			} else {
+				Console.WriteLine("No");
+			}
+
+			// The above code can be written as:
+			Console.WriteLine(1 == 1 ? "Yes" : "No");
+		}
+		// - Do not go use them more than once
+		// c = a ? b : d ? e : f;
+
+		// Guard statements can be used to reduce nesting
+
+
+		#endregion
+
 		#endregion
 	}
 }
