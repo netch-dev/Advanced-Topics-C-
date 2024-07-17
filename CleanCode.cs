@@ -98,8 +98,20 @@
 		// -- Use Push Member Down refactoring to move the method to the base class
 		#endregion
 
-		#region Duplicated Code
+		#region Comments
+		// - Don't write comments, re-write your code!
+		// -- Comments are not a substitute for clean code
+		// -- var pf = 10; // Price Factor
+		// --- Here the variable should be named priceFactor and the comment is not needed
 
+		// - Comments that state the obvious are not useful
+
+		// - Comments that are out of date are worse than no comments
+
+		// - Dead code should be removed, not commented out. You can always pull it back from the version control system
+
+		// - Comments should explain "whys" and "hows", not "whats"
+		// - Examples of good comments: todo, solving a problem with constraints
 		#endregion
 
 		#endregion
