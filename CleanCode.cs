@@ -33,19 +33,19 @@
 		#endregion
 
 		#region Poor Method Signatures
-		// Orange GetCustomer(int airplane);
-		// The method above is not clear about what it does
+		// - Orange GetCustomer(int airplane);
+		// -- The method above is not clear about what it does
 
 		// void Parse(int command); vs int Parse(string command);
 		#endregion
 
 		#region Long Parameter List 
 		// - The more parameters we have in a method, the more difficult it is to understand and use
-		// CheckNotifications(null, 1, true, false, DateTime.Now);
+		// -- CheckNotifications(null, 1, true, false, DateTime.Now);
 
-		// If you have parameters that are used often together, encapsulate them in a class to reduce the number of parameters
+		// - If you have parameters that are used often together, encapsulate them in a class to reduce the number of parameters
 
-		// Try to limit the number of parameters to 3 or 4
+		// - Try to limit the number of parameters to 3 or 4
 		#endregion
 
 		#region Output Parameters
@@ -53,26 +53,26 @@
 		// bool more = false;
 		// var customers = GetCustomers(pageIndex, out count, out more);
 
-		// It doesn't really make sense to pass data in and return from the arguments.
-		// Unless you're working with a method that returns a flag and outs a value
+		// - It doesn't really make sense to pass data in and return from the arguments.
+		// - Unless you're working with a method that returns a flag and outs a value
 
-		// Return an object from a method instead of using output parameters
+		// - Return an object from a method instead of using output parameters
 		#endregion
 
 		#region Variable Declarations on the Top
-		// In methods with variables declared at the top instead of where theyre used, the reader will have to scroll up and down to understand the code
+		// - In methods with variables declared at the top instead of where theyre used, the reader will have to scroll up and down to understand the code
 
-		// Declare variables close to their usage
+		// - Declare variables close to their usage
 		#endregion
 
 		#region Magic Numbers
-		// Avoid magic numbers at all times
+		// - Avoid magic numbers at all times, they are hard to understand and can lead to unexpected behavior
 		#endregion
 
 		#region Nested Conditionals
-		// Nested conditionals make programs hard to read and test
+		// - Nested conditionals make programs hard to read and test
 
-		// Using the Ternary operator
+		// - Using the Ternary operator: '?' can help reduce nesting
 		public void TernaryOperatorExample() {
 			if (1 == 1) {
 				Console.WriteLine("Yes");
@@ -80,15 +80,22 @@
 				Console.WriteLine("No");
 			}
 
-			// The above code can be written as:
+			// Using the ternary operator the above code can be written as:
 			Console.WriteLine(1 == 1 ? "Yes" : "No");
 		}
-		// - Do not go use them more than once
+
+		// - Do not go overboard and use them more than once
 		// c = a ? b : d ? e : f;
 
-		// Guard statements can be used to reduce nesting
+		// - Guard statements can be used to reduce nesting
+		#endregion
 
+		#region Switch Statments
+		// Switch statements violate the Open/Closed Principle
+		// - They can be replaced with polymorphism
 
+		// - Move the logic from switch statements to the derived classes
+		// -- Use Push Member Down refactoring to move the method to the base class
 		#endregion
 
 		#endregion
