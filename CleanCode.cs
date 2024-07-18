@@ -114,6 +114,15 @@
 		// - Examples of good comments: todo, solving a problem with constraints
 		#endregion
 
+		#region Long Methods
+		// - Long methods are hard to understand and test
+
+		// - A long method is one that is 10+ lines long
+
+		// - A method should do one thing [Single responsibility principle]
+		// -- The same thing applies to classes
+		#endregion
+
 		#endregion
 	}
 }
