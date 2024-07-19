@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Dynamic;
 
 namespace Netch.AdvancedTopics {
-	// Overview: 
-	// - In parameters [C# 7.2]
-	// - Ref readonly variables
-	// - Ref struct
-	// - Span<T>
-
-	// Summary:
-	// Values types can be passed by value or by reference
-	// 'in' keyword: pass by reference, but read-only
-	// 'ref readonly' lets you expose a member as a readyonly reference
-
 	public class MemoryManagement {
+		#region 'ref readonly' variables & the 'in' keyword
+		// Overview: 
+		// - In parameters [C# 7.2]
+		// - Ref readonly variables
+		// - Ref struct
+		// - Span<T>
+
+		// Summary:
+		// Values types can be passed by value or by reference
+		// 'in' keyword: pass by reference, but read-only
+		// 'ref readonly' lets you expose a member as a readonly reference
+
 		private struct Point {
 			public double X, Y;
 			public Point(double x, double y) {
@@ -67,6 +68,7 @@ namespace Netch.AdvancedTopics {
 			double distance = MeasureDistance(p1, p2);
 			Console.WriteLine($"Distance: {distance}");
 
+			// Using the ref readonly Point.Origin here won't make a copy of the value
 			double distanceFromOrigin = MeasureDistance(p1, Point.Origin);
 
 			// Because we don't have any ref qualifiers, the compiler will make a copy of the value
@@ -74,6 +76,63 @@ namespace Netch.AdvancedTopics {
 		}
 		#endregion
 
+		#endregion
 
+		#region Garbage Collection
+		// - The garbage collector is continuously deleting objects that are no longer in use
+
+		// - Garbage collection disadvantages:
+		// -- Too convenient because it's automatic so programmers lose sight of memory footprint
+		// -- Code works but allocates much more memory than it actually needs
+
+		#endregion
+
+		#region The Stack
+		// - The stack tracks method calls
+		// - Contains frames which hold parameters, local variables, and return addresses for each method call
+		// - A stack frame is removed when returning from a method. All local variables go out of scope at this point
+		// - If you have an infinite sequence of methods, the stack will overflow and throw a StackOverflowException
+		#endregion
+
+		#region The Heap
+		// - Objects are always created on the heap
+		// -- Every time you see the 'new' keyword, you're allocating memory to the heap
+
+		// - Dereferenced objects are not immediately deleted
+		// -- The garbage collector will delete them when it runs
+		#endregion
+
+		#region Value Types
+		// - A type of variable where the type and the value are stored together
+		// -- [TYPE] [VALUE]
+		// -- [int]  [12345]
+
+		// - Value types can exist both on the stack and heap
+
+		// - Value types are assigned by value, meaning the value is copied over
+
+		// - Value types are compared by value
+
+		// - All numeric types are value types:
+		// -- sbyte, byte, char, short, ushort, int, uint, long, ulong, float, double, decimal
+		// --- Also: bool, enum, struct
+		#endregion
+
+		#region Reference Types
+		// - A reference type is a type of variable that refers to a value stored on the heap
+
+		// - Reference types can exist both on the stack and heap, but they will always refer to a value on the heap
+
+		// - Reference types are assigned by reference, meaning the reference is copied over
+		// -- When assigning one variable to another, you end up with two references pointing to the same object on the heap.
+		// --- When compared they will be equal
+
+		// - Reference types are compared by reference
+		// -- If you have two reference type variables pointing at two separate objects, they will not be equal, even if they have identical data
+		#endregion
+
+		#region Boxing and Unboxing
+
+		#endregion
 	}
 }
