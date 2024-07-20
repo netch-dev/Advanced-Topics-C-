@@ -114,8 +114,6 @@ namespace Netch.AdvancedTopics {
 		// - Objects that survive two collection cycles are long-lived
 		// - 90% of all small objects are short-lived
 		// - All large objects (85K+) are long-lived
-
-
 		#endregion
 
 		#region Optimizing for the Garbage Collector
@@ -163,8 +161,7 @@ namespace Netch.AdvancedTopics {
 			}
 		}
 
-		// AllocationExample3:
-		/*
+		/* Allocation Example 3:
 		 * public static MyObject obj = new MyObject();
 		 * ...
 		 * Lots of other code
@@ -209,7 +206,7 @@ namespace Netch.AdvancedTopics {
 
 			// The problem with the code above is that the ArrayList is large and short-lived
 
-			// The solution is to simple clear the list instead of creating a new one
+			// The solution is to simply clear the list instead of creating a new one
 			// This way the list is re-used and it's lifetime is increased, effectively becoming long-living
 			arrayList.Clear();
 			// UseTheList(arrayList);
@@ -282,6 +279,37 @@ namespace Netch.AdvancedTopics {
 		 */
 		#endregion
 
+		#endregion
+
+		#region Finalizers in .NET
+		// - A class method that are called when objects are about to be cleaned up by the garbage collector
+
+		// - Finalizers are used to release scarce resources, such as file handles, network connections
+
+		// - The garbage collector processes finalizers in a separate thread
+		// -- They are processed in a random order, so finalizers must only process its own object, and never other referenced objects
+
+		// - Finalizers are not guaranteed to run
+		// -- If the host process exits, anything remaining in the finalizer queue after 4 seconds is discarded
+
+		// - Objects with finalizers always end up in generation 1 and sometimes in generation 2
+		// -- This is because objects with finalizers are kept alive and moved to next generation
+		// --- Then the GC will run the finalizer code in the next cycle on the finalizer thread
+		// ---- So many small short-lived objects with finalizers are bad, because their lifetime is increased
+		// ---- Objects with finalizers should be extremely short and run very quickly
+		// ---- Only add finalizers to objects at the edge of an object graph, not on the root object
+
+		// Finalizer example:
+		public class FinalizerExampleObject {
+			public FinalizerExampleObject() {
+
+			}
+
+			~FinalizerExampleObject() {
+				// Class finalizer starts with a tilde
+				// It will be called by the garbage collector just before the object is cleaned up
+			}
+		}
 		#endregion
 
 		#region The Stack
