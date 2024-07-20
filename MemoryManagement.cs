@@ -407,6 +407,7 @@ namespace Netch.AdvancedTopics {
 
 		// - The StringBuilder class should be used for string concatenation. Since it does not create a new string object for each concatenation
 		// -- If you know there will be a lot of concatenations, set the initial capacity of the StringBuilder to the expected size
+		// --- The reason for this is because the StringBuilder only has a tiny buffer to start with, and will have to reallocate and copy to new memory each time it runs out of space
 		// -- StringBuilder result = new StringBuilder(10000);
 		#endregion
 
@@ -430,6 +431,20 @@ namespace Netch.AdvancedTopics {
 		// - If your data will not have to be boxed frequently
 
 		// - In all other scenarios classes are a better choice
+		#endregion
+
+		#region 4. Always Pre-Size Collections
+		// - Every collection and list in .NET starts out with a certain default capacity
+		// -- When it runs out of space it will create a new list of twice the size and copy everything over
+		// --- So we should always pre-size collections to the expected size to avoid this
+
+		// - Default collection capacity:
+		// -- ArrayList: 4 items
+		// -- Queue: 4 items
+		// -- Stack: 16 items
+		// -- List: 4 items
+		// -- Dictionary: 12 items
+		// --- If you add hundreds or thousands of items to a collection, it will have to resize many times to accommodate all items-
 		#endregion
 
 		#endregion
