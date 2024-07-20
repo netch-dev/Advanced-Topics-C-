@@ -447,6 +447,20 @@ namespace Netch.AdvancedTopics {
 		// --- If you add hundreds or thousands of items to a collection, it will have to resize many times to accommodate all items-
 		#endregion
 
+		#region 5. Avoid Calling ToList in LINQ Expressions
+		// - Calling ToList in a LINQ expression can unexpectedly inflate the memory footprint of your application
+		// -- To fix this problem, call ToList before running the LINQ query
+
+		// - LINQ is a powerful framework for running queries on enumerable data
+
+		// - var numbers = Enumerable.Range(1, 1000).Where(x => x % 2 == 0);
+		// -- This expression above creates a filtered enumerator for a range of 500 odd numbers, but it doesn't actually generate the numbers yet
+		// -- The range does not occupy any memory. The enumerator only tracks the current number
+
+		// - You can use LINQ to process very large amount of data, while only using a tiny amount of heap memory
+		// -- Because the enumerator will only track the current item
+		#endregion
+
 		#endregion
 	}
 }
