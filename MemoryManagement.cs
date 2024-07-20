@@ -387,5 +387,29 @@ namespace Netch.AdvancedTopics {
 			int j = (int)o; // Unboxing
 		}
 		#endregion
+
+		#region Tricks to Improve Memory Allocation
+
+		#region 1. Avoid Boxing and Unboxing
+		// - The .NET framework uses boxing and unboxing to make value and reference types interchangeable
+
+		// - Each boxing operation creates one new object on the heap. A boxed object occupies more memory than the original value type
+
+		// - Boxing floods the heap with lots of small objects and puts considerable pressure on the GC
+		#endregion
+
+		#region 2. Do not Concatenate Strings; Use StringBuilder
+		// - Since strings are immutable, string methods never modify the original string
+		// -- Instead, they make a copy, modify the copy, and return the copy as a result
+		// --- The reason for this, is it makes strings behave like value types. Meaning they can be assigned and compared by value
+
+		// - Strings are optimized for fast comparison, and not bulk modifications
+
+		// - The StringBuilder class should be used for string concatenation. Since it does not create a new string object for each concatenation
+		// -- If you know there will be a lot of concatenations, set the initial capacity of the StringBuilder to the expected size
+		// -- StringBuilder result = new StringBuilder(10000);
+		#endregion
+
+		#endregion
 	}
 }

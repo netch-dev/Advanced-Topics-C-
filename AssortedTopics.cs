@@ -28,7 +28,7 @@ namespace Netch.AdvancedTopics {
 			Console.WriteLine("Outside using statement");
 		}
 
-		// Use case for Disposables: Simple timer class
+		// Use case for Disposable: Simple timer class
 		public class SimpleTimer : IDisposable {
 			private readonly Stopwatch st;
 			public SimpleTimer() {
