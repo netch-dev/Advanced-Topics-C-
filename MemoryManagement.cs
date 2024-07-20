@@ -410,6 +410,28 @@ namespace Netch.AdvancedTopics {
 		// -- StringBuilder result = new StringBuilder(10000);
 		#endregion
 
+		#region 3. Use Structs Instead of Classes
+		// - Structs are value types (stored inline), classes are reference types (always refer to an object stored elsewhere on the heap)
+		// - Structs are much faster than classes because they don't have a default constructor, cannot be inherited, and are not collected by the GC
+		// - Structs only allocate heap memory for their internal fields and do not have the 16-byte overhead that objects on the heap have
+
+		// - Assigning structs copies the value of all interval fields
+		// - Assigning classes copies the reference, and you end up with two references stored on the heap
+
+		// - Structs can implement interfaces but cannot inherit
+		// - Structs cannot have instance field initializers
+		// - Structs cannot have a parameterless constructor
+		// - Structs cannot have finalizers
+
+		// - Structs are great but you should only use them in specific scenarios:
+		// - When the data you're storing represents a single value, examples: a Point, Vector, Matrix, Complex number
+		// - If your data size is very small (24 bytes or less) and you're going to create thousands or millions of instances
+		// - If your data is immutable and should assigned and compared by value
+		// - If your data will not have to be boxed frequently
+
+		// - In all other scenarios classes are a better choice
+		#endregion
+
 		#endregion
 	}
 }
