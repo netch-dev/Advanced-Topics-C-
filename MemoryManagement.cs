@@ -312,6 +312,19 @@ namespace Netch.AdvancedTopics {
 		}
 		#endregion
 
+		#region The Dispose Pattern
+		// - A downside to finalizers is that they are called by the garbage collector, which is non-deterministic
+		// -- This means you don't know when the finalizer will run, or if it will run at all
+		// --- The solution is to use the Dispose pattern:
+
+		// - This design pattern introduces a Dispose method that you can call to release resources
+		// - The using statement will automatically call Dispose at the end of the using block
+
+		// - The dispose pattern dramatically reduces the length of time that resources are held
+
+		// - For more information on disposable objects, see AssortedTopics.cs
+		#endregion
+
 		#region The Stack
 		// - The stack tracks method calls
 		// - Contains frames which hold parameters, local variables, and return addresses for each method call
